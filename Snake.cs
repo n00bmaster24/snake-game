@@ -11,25 +11,19 @@
             return snake;
         }
 
-        public (int x, int y) DrawSnake(List<(int x, int y)> snake)
+        public void DrawSnake(List<(int x, int y)> snake, RenderBuffer renderBuffer)
         {
-            (int x, int y) head = snake[^1]; // Using index to get the last element
-            snake.Add(head);
-
-            // Erase the tail
-            if (snake.Count > 1)
+            // Clear previous snake parts
+            foreach (var (x, y) in snake)
             {
-                (int x, int y) tail = snake[0]; // Using index to get the first element
-                Console.SetCursorPosition(tail.x, tail.y);
-                Console.Write(" ");
-                snake.RemoveAt(0);
+                renderBuffer.DrawElement(x, y, ' ');
             }
 
-            // Draw the snake
-            Console.SetCursorPosition(head.x, head.y);
-            Console.Write("■");
-
-            return head;
+            // Draw snake
+            foreach (var (x, y) in snake)
+            {
+                renderBuffer.DrawElement(x, y, '■');
+            }
         }
     }
 }

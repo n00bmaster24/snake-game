@@ -13,4 +13,5 @@ game.Run();
 * Snake grows - Check
 * Game ends if the snake hits the border - Check
 * Game ends if the snake bites into its tail - Check
+* Optimize - WIP
  */

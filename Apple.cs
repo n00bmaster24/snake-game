@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace SnakeGame
 {
     public class Apple
     {
-        private int BorderWidth;
-        private int BorderHeight;
+        private readonly int BorderWidth;
+        private readonly int BorderHeight;
         private Random random;
         private (int x, int y) position;
 
@@ -36,10 +31,9 @@ namespace SnakeGame
             position = (random.Next(1, BorderWidth - 1), random.Next(1, BorderHeight - 1));
         }
 
-        public void DrawApple()
+        public void DrawApple(RenderBuffer renderBuffer)
         {
-            Console.SetCursorPosition(position.x, position.y);
-            Console.Write("@");
+            renderBuffer.DrawElement(position.x, position.y, '@');
         }
     }
 }

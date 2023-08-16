@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-
-namespace SnakeGame
+﻿namespace SnakeGame
 {
     public class Movement
     {
@@ -54,14 +47,16 @@ namespace SnakeGame
                     return head;
             }
         }
-        public void RemoveTail(List<(int x, int y)> currentPositions)
+        public void RemoveTail(List<(int x, int y)> currentPositions, RenderBuffer renderBuffer)
         {
             if (currentPositions.Count > 1)
             {
-                (int x, int y) tail = currentPositions[0];
-                Console.SetCursorPosition(tail.x, tail.y);
-                Console.Write(" ");
-                currentPositions.RemoveAt(0);
+                if (currentPositions.Count > 1)
+                {
+                    (int x, int y) tail = currentPositions[0];
+                    renderBuffer.DrawElement(tail.x, tail.y, ' ');
+                    currentPositions.RemoveAt(0);
+                }
             }
         }
     }

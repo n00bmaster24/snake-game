@@ -1,9 +1,11 @@
-﻿namespace SnakeGame
+﻿using System.Diagnostics;
+
+namespace SnakeGame
 {
     public class Game
     {
-        int borderWidth;
-        int borderHeight;
+        readonly int borderWidth;
+        readonly int borderHeight;
         public Game(int borderWidth, int borderHeight)
         {
             this.borderWidth = borderWidth;
@@ -12,30 +14,34 @@
 
         public void Run()
         {
-            var border = new DrawBorder(borderWidth, borderHeight);
+            var border = new Border(borderWidth, borderHeight);
             var snake = new Snake();
             var apple = new Apple(borderWidth, borderHeight);
             var movement = new Movement();
             var collisionDetector = new CollisionDetector(borderWidth, borderHeight);
+            var renderBuffer = new RenderBuffer(borderWidth, borderHeight);
 
             var currentPositions = new List<(int x, int y)> { snake.InitializeSnake(borderWidth, borderHeight)[0] };
-            ConsoleKey direction = ConsoleKey.RightArrow; // Initial direction
+            ConsoleKey initialDirection = ConsoleKey.RightArrow; 
+
+            var frameInterval = TimeSpan.FromMilliseconds(210);
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
 
             while (true)
             {
-                direction = movement.UpdateDirection(direction);
+                initialDirection = movement.UpdateDirection(initialDirection);
 
                 // Move the snake
-                var newHead = movement.Move(currentPositions[^1], direction);
+                var newHead = movement.Move(currentPositions[^1], initialDirection);
 
-                // Check if the snake hits the border
                 if (collisionDetector.IsCollision(newHead))
                 {
                     Console.Clear();
                     Console.WriteLine("Game Over! Snake hit the border.");
                     break;
                 }
-                // Check if the snake bites its own tail
+ 
                 if (collisionDetector.IsSelfBite(newHead, currentPositions))
                 {
                     Console.Clear();
@@ -43,29 +49,38 @@
                     break;
                 }
 
-                // Check if the snake eats the apple
                 if (apple.IsEaten(newHead))
                 {
                     apple.GenerateNewPosition();
-                    // Grow the snake
                     currentPositions.Insert(1, newHead);
                 }
                 else
                 {
                     // Remove the tail
-                    movement.RemoveTail(currentPositions);
+                    movement.RemoveTail(currentPositions, renderBuffer);
                 }
-                 border.Draw();
-                // Draw the snake
-                snake.DrawSnake(currentPositions);
+                renderBuffer.ClearBuffer();
+                
+                border.DrawBorder(renderBuffer);
+
+                snake.DrawSnake(currentPositions, renderBuffer);
 
                 // Add the new head position
                 currentPositions.Add(newHead);
 
-                // Draw the apple
-                apple.DrawApple();
+                apple.DrawApple(renderBuffer);
+                
+                renderBuffer.DrawBuffer();
+                
+                stopwatch.Stop();
+                var elapsed = stopwatch.Elapsed;
+                stopwatch.Restart();
 
-                Thread.Sleep(180);
+                // Delay if needed to maintain frame rate
+                if (elapsed < frameInterval)
+                {
+                    Thread.Sleep(frameInterval - elapsed);
+                }
             }
         }
     }

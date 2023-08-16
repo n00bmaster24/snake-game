@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SnakeGame
+﻿namespace SnakeGame
 {
     public class CollisionDetector
     {
-        private int borderWidth;
-        private int borderHeight;
+        private readonly int borderWidth;
+        private readonly int borderHeight;
 
         public CollisionDetector(int borderWidth, int borderHeight)
         {
