@@ -3,15 +3,15 @@ namespace SnakeGame
 {
     public class Apple
     {
-        private readonly int BorderWidth;
-        private readonly int BorderHeight;
+        private readonly int borderWidth;
+        private readonly int borderHeight;
         private Random random;
         private (int x, int y) position;
 
         public Apple(int borderWidth, int borderHeight)
         {
-            BorderWidth = borderWidth;
-            BorderHeight = borderHeight;
+            this.borderWidth = borderWidth;
+            this.borderHeight = borderHeight;
             random = new Random();
             GenerateNewPosition();
         }
@@ -28,7 +28,7 @@ namespace SnakeGame
 
         public void GenerateNewPosition()
         {
-            position = (random.Next(1, BorderWidth - 1), random.Next(1, BorderHeight - 1));
+            position = (random.Next(1, borderWidth - 1), random.Next(1, borderHeight - 1));
         }
 
         public void DrawApple(RenderBuffer renderBuffer)
