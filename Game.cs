@@ -22,6 +22,7 @@ namespace SnakeGame
             var movement = new Movement();
             var collisionDetector = new CollisionDetector(borderWidth, borderHeight);
             var renderBuffer = new RenderBuffer(borderWidth, borderHeight);
+            var gameOver = new GameOver();
 
             var currentPositions = new List<(int x, int y)> { snake.InitializeSnake(borderWidth, borderHeight)[0] };
             ConsoleKey initialDirection = ConsoleKey.RightArrow; 
@@ -36,20 +37,11 @@ namespace SnakeGame
 
                 var newHead = movement.Move(currentPositions[^1], initialDirection);
 
-                if (collisionDetector.IsCollision(newHead))
+                if (collisionDetector.IsCollision(newHead) || collisionDetector.IsSelfBite(newHead, currentPositions))
                 {
-                    Console.Clear();
-                    Console.WriteLine("Game Over! Snake hit the border.");
-                    break;
+                    gameOver.PrintEndGameText();
                 }
- 
-                if (collisionDetector.IsSelfBite(newHead, currentPositions))
-                {
-                    Console.Clear();
-                    Console.WriteLine("Game Over! Snake bit its own tail.");
-                    break;
-                }
-
+             
                 if (apple.IsEaten(newHead))
                 {
                     apple.GenerateNewPosition();

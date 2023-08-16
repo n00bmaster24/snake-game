@@ -4,7 +4,7 @@
     {
         public List<(int x, int y)> InitializeSnake(int borderWidth, int borderHeight)
         {
-            List<(int x, int y)> snake = new List<(int x, int y)>
+            List<(int x, int y)> snake = new()
             {
                 (borderWidth / 2, borderHeight / 2)
             };
