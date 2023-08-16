@@ -37,9 +37,10 @@ namespace SnakeGame
 
                 var newHead = movement.Move(currentPositions[^1], initialDirection);
 
-                if (collisionDetector.IsCollision(newHead) || collisionDetector.IsSelfBite(newHead, currentPositions))
+                if (collisionDetector.IsBorderHit(newHead) || collisionDetector.IsSelfBite(newHead, currentPositions))
                 {
                     gameOver.PrintEndGameText();
+                    break;
                 }
              
                 if (apple.IsEaten(newHead))

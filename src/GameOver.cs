@@ -4,7 +4,6 @@
     {
         public void PrintEndGameText()
         {
-            Console.Clear();
             Console.ForegroundColor = ConsoleColor.Red;
 
             string gameText = @"
@@ -22,7 +21,7 @@
                 
                 Better Luck Next Time!
             ";
-
+            Console.Clear();
             Console.WriteLine(gameText);
             Console.ResetColor();
         }

@@ -11,7 +11,7 @@
             this.borderHeight = borderHeight;
         }
 
-        public bool IsCollision((int x, int y) position)
+        public bool IsBorderHit((int x, int y) position)
         {
             return position.x == 0 || position.y == 0 || position.x == borderWidth - 1 || position.y == borderHeight - 1;
         }
