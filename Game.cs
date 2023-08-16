@@ -6,6 +6,7 @@ namespace SnakeGame
     {
         readonly int borderWidth;
         readonly int borderHeight;
+        
         public Game(int borderWidth, int borderHeight)
         {
             this.borderWidth = borderWidth;
@@ -56,7 +57,6 @@ namespace SnakeGame
                 }
                 else
                 {
-                    // Remove the tail
                     movement.RemoveTail(currentPositions, renderBuffer);
                 }
                 renderBuffer.ClearBuffer();
