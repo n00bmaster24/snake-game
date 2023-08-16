@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
+using SnakeGame.src;
 
-namespace SnakeGame.src
+namespace SnakeGame
 {
     public class Game
     {
