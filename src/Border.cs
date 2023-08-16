@@ -1,14 +1,14 @@
-﻿namespace SnakeGame
+﻿namespace SnakeGame.src
 {
     public class Border
     {
         private readonly int width;
         private readonly int height;
-        
+
         public Border(int consoleWidth, int consoleHeight)
         {
-            width =  consoleWidth;
-            height =  consoleHeight;
+            width = consoleWidth;
+            height = consoleHeight;
         }
 
         public void DrawBorder(RenderBuffer renderBuffer)

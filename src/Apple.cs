@@ -1,5 +1,4 @@
-﻿
-namespace SnakeGame
+﻿namespace SnakeGame.src
 {
     public class Apple
     {
