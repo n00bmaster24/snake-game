@@ -33,7 +33,6 @@ namespace SnakeGame
             {
                 initialDirection = movement.UpdateDirection(initialDirection);
 
-                // Move the snake
                 var newHead = movement.Move(currentPositions[^1], initialDirection);
 
                 if (collisionDetector.IsCollision(newHead))
