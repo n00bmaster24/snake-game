@@ -29,6 +29,13 @@
         {
             position = (random.Next(1, borderWidth - 1), random.Next(1, borderHeight - 1));
         }
+        public void GenerateNewPosition((int x, int y) snakeHead)
+        {
+            do
+            {
+                GenerateNewPosition();
+            } while (position.x == snakeHead.x && position.y == snakeHead.y);
+        }
 
         public void DrawApple(RenderBuffer renderBuffer)
         {

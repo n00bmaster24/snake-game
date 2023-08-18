@@ -1,6 +1,6 @@
 ﻿namespace SnakeGame.src
 {
-    internal class GameOver
+    public class GameOver
     {
         public void PrintEndGameText()
         {

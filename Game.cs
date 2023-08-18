@@ -27,7 +27,7 @@ namespace SnakeGame
             var currentPositions = new List<(int x, int y)> { snake.InitializeSnake(borderWidth, borderHeight)[0] };
             ConsoleKey initialDirection = ConsoleKey.RightArrow; 
 
-            var frameInterval = TimeSpan.FromMilliseconds(210);
+            var frameInterval = TimeSpan.FromMilliseconds(180);
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
@@ -45,7 +45,7 @@ namespace SnakeGame
              
                 if (apple.IsEaten(newHead))
                 {
-                    apple.GenerateNewPosition();
+                    apple.GenerateNewPosition(newHead);
                     currentPositions.Insert(1, newHead);
                 }
                 else
