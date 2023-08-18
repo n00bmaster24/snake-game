@@ -51,12 +51,9 @@
         {
             if (currentPositions.Count > 1)
             {
-                if (currentPositions.Count > 1)
-                {
-                    (int x, int y) tail = currentPositions[0];
-                    renderBuffer.DrawElement(tail.x, tail.y, ' ');
-                    currentPositions.RemoveAt(0);
-                }
+                (int x, int y) tail = currentPositions[0];
+                renderBuffer.DrawElement(tail.x, tail.y, ' ');
+                currentPositions.RemoveAt(0);
             }
         }
     }
