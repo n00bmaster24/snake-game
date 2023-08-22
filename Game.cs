@@ -27,7 +27,7 @@ namespace SnakeGame
             var currentPositions = new List<(int x, int y)> { snake.InitializeSnake(borderWidth, borderHeight)[0] };
             ConsoleKey initialDirection = ConsoleKey.RightArrow; 
 
-            var frameInterval = TimeSpan.FromMilliseconds(180);
+            var frameInterval = TimeSpan.FromMilliseconds(150);
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
@@ -48,12 +48,7 @@ namespace SnakeGame
                     apple.GenerateNewPosition(newHead);
                     snake.Grow(currentPositions, newHead);
                 }
-                else
-                {
-                    //only update the direction without growing
-                    currentPositions.Add(newHead);
-                    movement.RemoveTail(currentPositions, renderBuffer);
-                }
+
                 renderBuffer.ClearBuffer();
                 
                 border.DrawBorder(renderBuffer);
@@ -62,7 +57,11 @@ namespace SnakeGame
 
                 apple.DrawApple(renderBuffer);
                 
+                currentPositions.Add(newHead);
+
                 renderBuffer.DrawBuffer();
+
+                movement.RemoveTail(currentPositions, renderBuffer);
                 
                 stopwatch.Stop();
                 var elapsed = stopwatch.Elapsed;
