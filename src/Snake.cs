@@ -25,5 +25,10 @@
                 renderBuffer.DrawElement(x, y, '■');
             }
         }
+
+        public void Grow(List<(int x, int y)> snake, (int x, int y) newHead)
+        {
+            snake.Insert(1, newHead);
+        }
     }
 }

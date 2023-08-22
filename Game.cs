@@ -46,10 +46,12 @@ namespace SnakeGame
                 if (apple.IsEaten(newHead))
                 {
                     apple.GenerateNewPosition(newHead);
-                    currentPositions.Insert(1, newHead);
+                    snake.Grow(currentPositions, newHead);
                 }
                 else
                 {
+                    //only update the direction without growing
+                    currentPositions.Add(newHead);
                     movement.RemoveTail(currentPositions, renderBuffer);
                 }
                 renderBuffer.ClearBuffer();
@@ -57,9 +59,6 @@ namespace SnakeGame
                 border.DrawBorder(renderBuffer);
 
                 snake.DrawSnake(currentPositions, renderBuffer);
-
-                // Add the new head position
-                currentPositions.Add(newHead);
 
                 apple.DrawApple(renderBuffer);
                 

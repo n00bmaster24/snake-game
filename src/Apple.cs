@@ -15,11 +15,6 @@
             GenerateNewPosition();
         }
 
-        public (int x, int y) GetPosition()
-        {
-            return position;
-        }
-
         public bool IsEaten((int x, int y) snakeHead)
         {
             return snakeHead.x == position.x && snakeHead.y == position.y;
