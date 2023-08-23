@@ -5,8 +5,8 @@ namespace SnakeGame
 {
     public class Game
     {
-        readonly int borderWidth;
-        readonly int borderHeight;
+        readonly private int borderWidth;
+        readonly private int borderHeight;
         
         public Game(int borderWidth, int borderHeight)
         {
@@ -16,52 +16,44 @@ namespace SnakeGame
 
         public void Run()
         {
-            var border = new Border(borderWidth, borderHeight);
-            var snake = new Snake();
-            var apple = new Apple(borderWidth, borderHeight);
-            var movement = new Movement();
-            var collisionDetector = new CollisionDetector(borderWidth, borderHeight);
             var renderBuffer = new RenderBuffer(borderWidth, borderHeight);
+            var border = new Border(borderWidth, borderHeight, renderBuffer);
+            var snake = new Snake(borderWidth, borderHeight, renderBuffer);
+            var apple = new Apple(borderWidth, borderHeight, renderBuffer);
             var gameOver = new GameOver();
 
-            var currentPositions = new List<(int x, int y)> { snake.InitializeSnake(borderWidth, borderHeight)[0] };
-            ConsoleKey initialDirection = ConsoleKey.RightArrow; 
-
-            var frameInterval = TimeSpan.FromMilliseconds(150);
+            var frameInterval = TimeSpan.FromMilliseconds(200);
             var stopwatch = new Stopwatch();
-            stopwatch.Start();
 
             while (true)
             {
-                initialDirection = movement.UpdateDirection(initialDirection);
+                stopwatch.Start();
 
-                var newHead = movement.Move(currentPositions[^1], initialDirection);
+                snake.UpdateDirection();
 
-                if (collisionDetector.IsBorderHit(newHead) || collisionDetector.IsSelfBite(newHead, currentPositions))
+                snake.Move();
+
+                if (snake.IsBorderHit() || snake.IsSelfBite())
                 {
                     gameOver.PrintEndGameText();
                     break;
                 }
              
-                if (apple.IsEaten(newHead))
+                if (apple.IsEaten(snake.Head))
                 {
-                    apple.GenerateNewPosition(newHead);
-                    snake.Grow(currentPositions, newHead);
+                    apple.GenerateNewPosition(snake.Head);
+                    snake.Grow();
                 }
 
                 renderBuffer.ClearBuffer();
                 
-                border.DrawBorder(renderBuffer);
+                border.DrawBorder();
 
-                snake.DrawSnake(currentPositions, renderBuffer);
+                snake.DrawSnake();
 
-                apple.DrawApple(renderBuffer);
-                
-                currentPositions.Add(newHead);
+                apple.DrawApple();
 
                 renderBuffer.DrawBuffer();
-
-                movement.RemoveTail(currentPositions, renderBuffer);
                 
                 stopwatch.Stop();
                 var elapsed = stopwatch.Elapsed;

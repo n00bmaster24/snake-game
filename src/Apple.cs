@@ -2,13 +2,15 @@
 {
     public class Apple
     {
+        private readonly RenderBuffer renderBuffer;
         private readonly int borderWidth;
         private readonly int borderHeight;
         private Random random;
         private (int x, int y) position;
 
-        public Apple(int borderWidth, int borderHeight)
+        public Apple(int borderWidth, int borderHeight, RenderBuffer renderBuffer)
         {
+            this.renderBuffer = renderBuffer;
             this.borderWidth = borderWidth;
             this.borderHeight = borderHeight;
             random = new Random();
@@ -32,7 +34,7 @@
             } while (position.x == snakeHead.x && position.y == snakeHead.y);
         }
 
-        public void DrawApple(RenderBuffer renderBuffer)
+        public void DrawApple()
         {
             renderBuffer.DrawElement(position.x, position.y, '@');
         }

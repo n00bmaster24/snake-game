@@ -4,14 +4,16 @@
     {
         private readonly int width;
         private readonly int height;
+        private readonly RenderBuffer renderBuffer;
 
-        public Border(int consoleWidth, int consoleHeight)
+        public Border(int consoleWidth, int consoleHeight, RenderBuffer renderBuffer)
         {
             width = consoleWidth;
             height = consoleHeight;
+            this.renderBuffer = renderBuffer;
         }
 
-        public void DrawBorder(RenderBuffer renderBuffer)
+        public void DrawBorder()
         {
             for (int x = 0; x < width; x++)
             {
