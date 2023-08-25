@@ -34,10 +34,16 @@
                 renderBuffer.DrawElement(x, y, '■');
             }
         }
-        enum Direction { Left, Right, Up, Down }
-        public void UpdateDirection()
+
+        public void Move()
         {
-            //which class should take care of this functionality?
+            UpdateDirection();
+            UpdateCoordinates();
+        }
+
+        enum Direction { Left, Right, Up, Down }
+        private void UpdateDirection()
+        {
             Console.CursorVisible = false;
             if (Console.KeyAvailable)
             {
@@ -64,33 +70,31 @@
             }
         }
 
-        public void Move()
+        private void UpdateCoordinates()
         {
-            //move logic to get newHeadpossition
-            var head = snake.First();
             (int x, int y) newHead;
             switch (currentDirection)
             {
                 case Direction.Up:
-                    newHead =  (head.x, head.y - 1);
+                    newHead = (Head.x, Head.y - 1);
                     break;
                 case Direction.Down:
-                    newHead =  (head.x, head.y + 1);
+                    newHead = (Head.x, Head.y + 1);
                     break;
                 case Direction.Left:
-                    newHead =  (head.x - 1, head.y);
+                    newHead = (Head.x - 1, Head.y);
                     break;
                 case Direction.Right:
-                    newHead =  (head.x + 1, head.y);
+                    newHead = (Head.x + 1, Head.y);
                     break;
                 default:
-                    newHead =  head;
+                    newHead = Head;
                     break;
-
             }
-            snake.Add(newHead);
+            snake.Insert(0, newHead);
             RemoveTail();
         }
+
         public void Grow()
         {
             var tail = snake.Last();
@@ -98,18 +102,11 @@
         }
         public bool IsBorderHit()
         {
-            return snake.First().x == 0 || snake.First().y == 0 || snake.First().x == borderWidth - 1 || snake.First().y == borderHeight - 1;
+            return Head.x == 0 || Head.y == 0 || Head.x == borderWidth - 1 || Head.y == borderHeight - 1;
         }
         public bool IsSelfBite()
         {
-            foreach (var segment in snake.Skip(1))
-            {
-                if (segment.x == snake.First().x && segment.y == snake.First().y)
-                {
-                    return true;
-                }
-            }
-            return false;
+            return snake.Skip(1).Any(segment => segment.x == Head.x && segment.y == Head.y);
         }
         private void RemoveTail()
         {
@@ -117,7 +114,7 @@
             {
                 (int x, int y) tail = snake.Last();
                 renderBuffer.DrawElement(tail.x, tail.y, ' ');
-                snake.RemoveAt(0);
+                snake.Remove(tail);
             }
         }
     }

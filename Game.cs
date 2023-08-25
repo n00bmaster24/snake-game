@@ -29,8 +29,6 @@ namespace SnakeGame
             {
                 stopwatch.Start();
 
-                snake.UpdateDirection();
-
                 snake.Move();
 
                 if (snake.IsBorderHit() || snake.IsSelfBite())
