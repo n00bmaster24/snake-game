@@ -5,8 +5,8 @@
         private readonly int borderWidth;
         private readonly int borderHeight;
         private readonly RenderBuffer renderBuffer;
-        private readonly List<(int x, int y)> snake;
-        public (int x, int y) Head => snake.First();
+        private readonly LinkedList<(int x, int y)> snake;
+        public (int x, int y) Head => snake.First.Value;
         private Direction currentDirection = Direction.Right;
 
         public Snake(int borderWidth, int borderHeight, RenderBuffer renderBuffer)
@@ -14,10 +14,8 @@
             this.borderWidth = borderWidth;
             this.borderHeight = borderHeight;
             this.renderBuffer = renderBuffer;
-            snake = new()
-            {
-                (borderWidth / 2, borderHeight / 2)
-            };
+            snake = new LinkedList<(int x, int y)>();
+            snake.AddLast((borderWidth / 2, borderHeight / 2));
         }
 
         public void DrawSnake()
@@ -91,14 +89,14 @@
                     newHead = Head;
                     break;
             }
-            snake.Insert(0, newHead);
+            snake.AddFirst(newHead);
             RemoveTail();
         }
 
         public void Grow()
         {
             var tail = snake.Last();
-            snake.Add(tail);
+            snake.AddLast(tail);
         }
         public bool IsBorderHit()
         {
@@ -112,9 +110,7 @@
         {
             if (snake.Count > 1)
             {
-                (int x, int y) tail = snake.Last();
-                renderBuffer.DrawElement(tail.x, tail.y, ' ');
-                snake.Remove(tail);
+                snake.RemoveLast();
             }
         }
     }
