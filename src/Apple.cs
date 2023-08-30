@@ -22,7 +22,7 @@
             return snakeHead.x == position.x && snakeHead.y == position.y;
         }
 
-        public void GenerateNewPosition()
+        private void GenerateNewPosition()
         {
             position = (random.Next(1, borderWidth - 1), random.Next(1, borderHeight - 1));
         }
